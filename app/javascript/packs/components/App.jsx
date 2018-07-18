@@ -2,9 +2,17 @@ import React from 'react'
 import BlogAppContainer from './BlogAppContainer'
 import { Provider } from 'react-redux'
 
-import { createStore } from 'redux'
-import reducers from '../reducers'
-const store = createStore(reducers)
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import { logger } from 'redux-logger'
+
+import reducers from '../reducers/appReducers'
+
+const enhancer = (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose)(
+  applyMiddleware(thunkMiddleware, logger)
+)
+
+const store = createStore(reducers, enhancer)
 
 class App extends React.Component {
   render() {

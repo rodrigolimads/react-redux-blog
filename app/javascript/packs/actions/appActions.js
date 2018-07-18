@@ -1,4 +1,5 @@
 import * as actionTypes from '../types/actions'
+import axios from 'axios'
 
 export function fetchPosts() {
   return dispatch => {
@@ -18,14 +19,20 @@ export function fetchPosts() {
 
 export function fetchPostsSuccess(posts) {
   return {
-    type: FETCH_POSTS_SUCCESS,
+    type: actionTypes.FETCH_POSTS_SUCCESS,
     response: { posts },
   }
 }
 
 export function fetchPostsFailure(error) {
   return {
-    type: FETCH_POSTS_FAILURE,
+    type: actionTypes.FETCH_POSTS_FAILURE,
     response: { error },
+  }
+}
+
+export function reorderPosts() {
+  return {
+    type: actionTypes.REORDER_POSTS,
   }
 }

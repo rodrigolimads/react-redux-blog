@@ -1,22 +1,8 @@
-import React from 'react'
-import axios from 'axios'
-import { connect } from 'react-redux'
+import React, { Component } from 'react'
 
-class PostList extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      posts: [],
-    }
-  }
-
-  componentDidMount() {
-    this.props.fetchPosts();
-  }
-
+class PostList extends Component {
   render() {
-    const postList = this.state.posts.map((post, idx) => {
+    const postList = this.props.posts.map((post, idx) => {
       return(
         <tr key={idx}>
           <td>{post.title}</td>
@@ -27,38 +13,28 @@ class PostList extends React.Component {
     })
 
     return (
-      <div className='post-container'>
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Content</th>
-              <th></th>
-            </tr>
-            { postList }
-          </thead>
-        </table>
+      <div>
+        <div className='post-container'>
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th></th>
+              </tr>
+              { postList }
+            </thead>
+          </table>
+        </div>
+
+        <div>
+          <button onClick={() => this.props.reorderPosts()}>
+            Reoder Posts
+          </button>
+        </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  console.log(state)
-  return {
-    posts: state.app.posts
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchPosts: () => {
-      dispatch(fetchPosts())
-    },
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PostList)
+export default PostList
